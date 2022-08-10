@@ -3,10 +3,7 @@ package org.example.DAO;
 import org.example.connection.MySQLConnection;
 import org.example.models.Address;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +24,27 @@ public class AddressDAO {
             }
         } catch (SQLException e) {
             System.out.println("Can't execute Query");
+            e.printStackTrace();
+        }
+        return addressList;
+    }
+    public List<Address> getUserAddress(int id){
+        List<Address> addressList=new ArrayList<>();
+        Connection connection=MySQLConnection.getConnection();
+        String sql="select * from address where id in (select address_id from user where id='"+id+"')";
+        try{
+            Statement statement=connection.createStatement();
+            ResultSet resultSet=statement.executeQuery(sql);
+            while(resultSet.next()){
+                int addressId=resultSet.getInt("id");
+                String street=resultSet.getString("street");
+                String city=resultSet.getString("city");
+                String state=resultSet.getString("state");
+                addressList.add(new Address(addressId,street,city,state));
+            }
+        }
+        catch (SQLException e){
+            System.out.println("Can't execute query");
             e.printStackTrace();
         }
         return addressList;

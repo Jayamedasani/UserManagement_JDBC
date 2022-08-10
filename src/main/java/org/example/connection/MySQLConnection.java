@@ -3,7 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 public class MySQLConnection {
-    private static String host = "jdbc:mysql://localhost:3306/employeejdbc";
+    private static String host = "jdbc:mysql://localhost:3306/userjdbc";
     private static String userName = "root";
     private static String password = "Pramati@123";
 
